@@ -1,0 +1,12 @@
+[submodule "skills/email-best-practices"]
+	path = skills/email-best-practices
+	url = https://github.com/resend/email-best-practices.git
+[submodule "skills/react-email"]
+	path = skills/react-email
+	url = https://github.com/resend/react-email.git
+[submodule "skills/supabase-agent-skills"]
+	path = skills/supabase-agent-skills
+	url = https://github.com/supabase/agent-skills.git
+[submodule "skills/vercel-agent-skills"]
+	path = skills/vercel-agent-skills
+	url = https://github.com/vercel-labs/agent-skills.git
