@@ -1,87 +1,81 @@
-# 🏭 Setup Proyectos Multiatlas
+# 🏭 Setup-Proyectos-Multiatlas
 
-> Configuración portable de skills, automations y metodología para desarrollo de proyectos SaaS
+> Sistema de conocimiento compartido que crece automáticamente con cada proyecto
 
 **Versión:** 1.0.0  
-**Última actualización:** 2026-02-06
+**Última actualización:** 2026-02-07
 
 ---
 
-## 📋 ¿Qué es esto?
+## 🎯 ¿Qué es esto?
 
-Este repositorio contiene toda la configuración necesaria para que cualquier agente de IA (Claude, Gemini, etc.) trabaje siguiendo la **metodología Multiatlas** para desarrollo de SaaS.
-
-Incluye:
-- ✅ **Skills globales** - Mejores prácticas de tecnologías (Supabase, Next.js, Resend, etc.)
-- ✅ **Automations** - Flujos automatizados para tareas comunes
-- ✅ **Templates** - Plantillas de proyectos base
-- ✅ **Documentación** - Filosofía y metodología de trabajo
+Un repositorio de **aprendizajes, skills y mejores prácticas** que se alimenta automáticamente de cada proyecto que haces. Piensa en ello como un "cerebro colectivo" del equipo.
 
 ---
 
-## 🚀 Instalación
+## 🚀 Inicio Rápido
 
-### Prerrequisitos
-- Git instalado
-- Cuenta de GitHub
-- Antigravity o Claude Code instalado
-
-### Paso 1: Clonar el repositorio
+### 1. Clonar el Repositorio
 
 ```bash
-# Navegar a la carpeta de configuración del agente
-cd C:\Users\TU_USUARIO\.gemini
-
-# Clonar este repo
 git clone https://github.com/Multiatlas/Setup-Proyectos-Multiatlas.git
+cd Setup-Proyectos-Multiatlas
 ```
 
-### Paso 2: Crear symlinks
+### 2. Leer la Documentación
 
-**Windows (PowerShell como Administrador):**
-```powershell
-cd C:\Users\TU_USUARIO\.gemini
+- **[VISION.md](VISION.md)** - Qué es y por qué existe (10 min)
+- **[docs/auto-blindaje.md](docs/auto-blindaje.md)** - Aprendizajes del equipo (5 min)
+- **[skills/](skills/)** - Patrones reutilizables
 
-# Crear symlinks para que el agente use estos skills/automations
-New-Item -ItemType SymbolicLink -Path "skills" -Target "Setup-Proyectos-Multiatlas\skills"
-New-Item -ItemType SymbolicLink -Path "automations" -Target "Setup-Proyectos-Multiatlas\automations"
+### 3. Solicitar Acceso de Colaborador
+
+**Para poder contribuir (hacer push), necesitas ser colaborador invitado.**
+
+Contacta al admin del repo:
+```
+Hola, quiero contribuir a Setup-Proyectos-Multiatlas.
+¿Puedes añadirme como colaborador?
+Mi usuario de GitHub: [tu_username]
 ```
 
-**Alternativa sin symlinks (copiar):**
-```bash
-# Si no tienes permisos de administrador
-xcopy Setup-Proyectos-Multiatlas\skills skills\ /E /I
-xcopy Setup-Proyectos-Multiatlas\automations automations\ /E /I
-```
-
-### Paso 3: Verificar instalación
-
-Abre tu agente de IA y pregunta:
-```
-¿Qué skills tienes disponibles?
-```
-
-Deberías ver los skills de este repo listados.
+Una vez invitado, podrás hacer `git push`.
 
 ---
 
-## 🔄 Sincronización entre Ordenadores
+## 📋 Uso Diario
 
-### Actualizar (descargar cambios)
+### Al Inicio del Día
 
 ```bash
-cd C:\Users\TU_USUARIO\.gemini\Setup-Proyectos-Multiatlas
-git pull
+cd Setup-Proyectos-Multiatlas
+git pull  # Obtener últimos aprendizajes del equipo
 ```
 
-### Subir cambios (si añadiste algo)
+### Durante el Proyecto
+
+1. **Lee `docs/auto-blindaje.md`** antes de empezar
+2. Aplica los aprendizajes documentados
+3. Evita errores que otros ya resolvieron
+
+### Al Final del Día (5 min)
 
 ```bash
-cd C:\Users\TU_USUARIO\.gemini\Setup-Proyectos-Multiatlas
+# 1. ¿Encontraste un error?
+echo "### 2026-02-07: Railway bloquea SMTP" >> docs/auto-blindaje.md
+echo "- **Error:** Connection timeout" >> docs/auto-blindaje.md
+echo "- **Fix:** Usar Resend (API HTTP)" >> docs/auto-blindaje.md
+
+# 2. ¿Creaste algo reutilizable?
+cp src/lib/canva.ts skills/canva-integration/
+
+# 3. Commit y push
 git add .
-git commit -m "Descripción de los cambios"
+git commit -m "docs: añadir aprendizaje Railway SMTP"
 git push
 ```
+
+**Nota:** Necesitas ser colaborador invitado para hacer `git push`.
 
 ---
 
@@ -89,87 +83,126 @@ git push
 
 ```
 Setup-Proyectos-Multiatlas/
-├── skills/                    # Skills globales reutilizables
-│   ├── supabase-best-practices/
+├── README.md              # Este archivo
+├── VISION.md              # Visión y filosofía (lectura obligatoria)
+│
+├── skills/                # Patrones reutilizables
+│   ├── spanish-naming-convention/
 │   ├── email-best-practices/
-│   ├── nextjs-patterns/
-│   ├── react-email/
-│   └── multiatlas-methodology/  # Metodología Multiatlas
+│   ├── supabase-agent-skills/
+│   └── ...
 │
-├── automations/               # Automatizaciones
-│   ├── new-project-setup/
-│   └── daily-sync/
+├── automations/           # Procesos automatizables
+│   └── auto-blindaje/
 │
-├── templates/                 # Templates de proyecto
-│   └── nextjs-supabase-base/
+├── docs/                  # Documentación
+│   └── auto-blindaje.md   # Aprendizajes acumulados
 │
-├── docs/                      # Documentación
-│   ├── PHILOSOPHY.md
-│   ├── GOLDEN_PATH.md
-│   └── SECURITY.md
-│
-└── README.md                  # Este archivo
+└── templates/             # Plantillas reutilizables
 ```
 
 ---
 
-## 🎯 Uso
+## 🎯 Filosofía
 
-Una vez instalado, el agente automáticamente:
-- ✅ Sigue las mejores prácticas definidas en los skills
-- ✅ Usa las automations cuando sea apropiado
-- ✅ Aplica la metodología Multiatlas en todos los proyectos
+### Auto-Blindaje
 
-**No necesitas hacer nada especial**, el agente tiene acceso a todo.
+> "Cada error es un impacto que refuerza nuestra estructura. Blindamos el proceso para que la falla nunca se repita."
 
----
+**Proceso:**
+```
+Error ocurre → Se arregla → Se DOCUMENTA → NUNCA ocurre de nuevo
+```
 
-## 👥 Colaboradores
+### Crecimiento Orgánico
 
-Para añadir colaboradores al repo:
-
-1. Ve a https://github.com/Multiatlas/Setup-Proyectos-Multiatlas/settings/access
-2. Click en "Add people"
-3. Invita por email o username de GitHub
-
-Los colaboradores podrán:
-- ✅ Clonar el repo
-- ✅ Hacer pull de cambios
-- ✅ Hacer push de mejoras
+No es un proyecto que se "termina". Crece naturalmente con cada proyecto:
+- Hoy: 3 aprendizajes, 7 skills
+- En 6 meses: 50+ aprendizajes, 20+ skills
+- En 1 año: 100+ aprendizajes, 50+ skills
 
 ---
 
-## 📚 Documentación Completa
+## 👥 Roles y Permisos
 
-Ver carpeta `docs/` para:
-- **PHILOSOPHY.md** - Principios de desarrollo (Henry Ford, Elon Musk)
-- **GOLDEN_PATH.md** - Stack tecnológico único
-- **SECURITY.md** - Git Shield y mejores prácticas de seguridad
+### Visitante (Cualquiera)
+- ✅ Ver código
+- ✅ Clonar repo
+- ❌ No puede hacer push
+
+### Colaborador (Invitado)
+- ✅ Ver código
+- ✅ Clonar repo
+- ✅ Hacer push
+- ✅ Contribuir aprendizajes
+
+### Admin
+- ✅ Todo lo anterior
+- ✅ Invitar colaboradores
+- ✅ Cambiar configuración
 
 ---
 
-## 🔒 Seguridad
+## 🔐 Seguridad
 
-Este repo es **público** pero NO contiene:
-- ❌ Credenciales
-- ❌ API Keys
+**Este repositorio NO contiene:**
+- ❌ Credenciales (API keys, passwords)
+- ❌ Código de clientes
 - ❌ Información sensible
 
-Solo contiene:
-- ✅ Metodología
+**Solo contiene:**
+- ✅ Documentación
+- ✅ Patrones genéricos
 - ✅ Mejores prácticas
-- ✅ Templates de código
+- ✅ Aprendizajes
 
 ---
 
-## 🆘 Soporte
+## 🤝 Contribuir
 
-**Problemas o dudas:**
-- Email: platmultiatlas@gmail.com
-- Issues: https://github.com/Multiatlas/Setup-Proyectos-Multiatlas/issues
+### Opción 1: Colaborador Invitado (Recomendado)
+
+1. Solicitar acceso al admin
+2. Aceptar invitación de GitHub
+3. Hacer cambios y push directo
+
+### Opción 2: Pull Request (Sin Invitación)
+
+1. Hacer fork del repo
+2. Hacer cambios en tu fork
+3. Abrir Pull Request
+4. Esperar aprobación del admin
 
 ---
 
-## 📝 Licencia
+## 📊 Métricas
 
-Uso interno de Multiatlas © 2026
+**Estado actual:**
+- Aprendizajes documentados: 3
+- Skills creadas: 7
+- Automations: 1
+- Proyectos contribuyentes: 1 (Asiste Hogar)
+
+**Objetivo 6 meses:**
+- Aprendizajes: 50+
+- Skills: 20+
+- Automations: 5+
+- Proyectos: 10+
+
+---
+
+## 📞 Contacto
+
+**Admin del repo:** [Tu nombre]  
+**Email:** [Tu email]  
+**GitHub:** [@Multiatlas](https://github.com/Multiatlas)
+
+---
+
+## 📜 Licencia
+
+Privado - Solo para equipo Multiatlas y colaboradores invitados.
+
+---
+
+**Lee [VISION.md](VISION.md) para entender el propósito completo del sistema.**

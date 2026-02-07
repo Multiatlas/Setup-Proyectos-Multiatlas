@@ -50,11 +50,18 @@ Si lo usas en cada proyecto:
 
 ## 7. ¿Cómo se usa en el día a día?
 
+**Requisito:** Debes ser colaborador invitado del repo en GitHub.
+
 Al final de cada día de trabajo, 5 minutos:
 1. ¿Encontraste un error? → Documenta en `auto-blindaje.md`
 2. ¿Creaste algo reutilizable? → Copia a `skills/`
 3. `git commit` y `git push`
 4. Listo, disponible para todos
+
+**Si NO eres colaborador:**
+- Puedes ver y clonar el repo
+- Pero NO puedes hacer `git push`
+- Solución: Pedir al admin que te invite como colaborador
 
 ---
 
