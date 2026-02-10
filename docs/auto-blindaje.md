@@ -18,6 +18,35 @@
 - **Documentación:** `reporte_smtp_tests.md` (Asiste Hogar)
 - **Proyecto:** Asiste Hogar
 
+#### 2026-02-10: NO necesitas Resend — Usa la API REST de tu proveedor de email
+- **Error:** Pensar que necesitas contratar Resend/SendGrid para enviar emails desde Railway
+- **Síntoma:** Dependencia innecesaria de un servicio externo adicional (coste extra)
+- **Fix:** Usar la API REST del proveedor que YA tienes (ej: Mailrelay `/api/v1/send_emails` vía HTTPS/443). Railway permite HTTPS perfectamente, solo bloquea puertos SMTP (25/465/587)
+- **Aplicar en:** Todos los proyectos que ya usen Mailrelay, SendGrid, Mailgun u otro con API REST
+- **Documentación:** `server.js` en ROI-MASTER-CALCULATOR-IA (función `sendROIEmail`)
+- **Proyecto:** ROI Master Calculator IA
+- **⚠️ Clave:** Estrategia doble → API REST (primario) + SMTP (fallback local)
+
+---
+
+### Mailrelay API
+
+#### 2026-02-10: Filtro de búsqueda de suscriptores — usar q[email]
+- **Error:** Buscar suscriptores con `?email=xxx` devuelve lista paginada genérica sin filtrar
+- **Síntoma:** `ERROR CRITICO: Mailrelay dice que existe, pero no lo encontramos`
+- **Fix:** Usar `?q%5Bemail%5D=xxx` (que es `q[email]=xxx` URL-encoded) para filtrar en servidor
+- **Aplicar en:** Todos los proyectos con integración Mailrelay API v1
+- **Documentación:** `server.js` función `addToMailrelay` en ROI-MASTER-CALCULATOR-IA  
+- **Proyecto:** ROI Master Calculator IA
+
+#### 2026-02-10: Campo correcto para grupos es group_ids (no groups)
+- **Error:** Usar `groups: [9]` al crear/actualizar suscriptor
+- **Síntoma:** Suscriptor se crea pero sin grupo asignado (silently ignored)
+- **Fix:** Usar `group_ids: [9]` — la API acepta solo `group_ids` para asignar grupos
+- **Aplicar en:** Todos los proyectos con Mailrelay
+- **Documentación:** `server.js` función `addToMailrelay`
+- **Proyecto:** ROI Master Calculator IA
+
 ---
 
 ### Naming y Organización
@@ -66,9 +95,9 @@ Cuando encuentres un error:
 
 ## 📊 Estadísticas
 
-- **Total aprendizajes:** 3
-- **Último actualizado:** 2026-02-06
-- **Proyectos contribuyentes:** Asiste Hogar
+- **Total aprendizajes:** 6
+- **Último actualizado:** 2026-02-10
+- **Proyectos contribuyentes:** Asiste Hogar, ROI Master Calculator IA
 - **Skills creadas:** 1 (spanish-naming-convention)
 
 ---
