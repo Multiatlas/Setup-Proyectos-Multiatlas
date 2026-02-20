@@ -73,6 +73,84 @@
 
 ---
 
+### Supabase / PostgreSQL
+
+#### 2026-02-20: CHECK constraints — NO usar ALTER TABLE ADD, usar DROP + re-ADD
+- **Error:** Intentar `ALTER TABLE profiles ADD CONSTRAINT` para añadir un nuevo valor al CHECK de roles
+- **Síntoma:** Error SQL: constraint already exists
+- **Fix:** Primero `ALTER TABLE profiles DROP CONSTRAINT profiles_role_check;` y luego `ALTER TABLE profiles ADD CONSTRAINT profiles_role_check CHECK (role IN ('worker', 'client', 'admin', 'super_admin'));`
+- **Aplicar en:** Todos los proyectos con CHECK constraints en Supabase
+- **Proyecto:** Asiste Hogar
+
+#### 2026-02-20: service_role key obligatorio para operaciones admin (createUser)
+- **Error:** Usar `anon` key para crear usuarios desde panel admin
+- **Síntoma:** RLS bloquea la operación, error 403
+- **Fix:** Crear cliente Supabase con `SUPABASE_SERVICE_ROLE_KEY` para operaciones admin (bypasa RLS)
+- **Aplicar en:** Todos los proyectos con panel admin que cree/gestione usuarios
+- **⚠️ Clave:** NUNCA exponer `service_role` en el frontend. Solo en API routes del servidor
+- **Proyecto:** Asiste Hogar
+
+---
+
+### Seguridad
+
+#### 2026-02-17: bcrypt obligatorio para hashing de passwords admin
+- **Error:** Guardar passwords de admin en texto plano o con hash débil
+- **Síntoma:** Vulnerabilidad crítica si la BD se compromete
+- **Fix:** Usar `bcrypt.hash(password, 10)` para hashear y `bcrypt.compare()` para verificar
+- **Aplicar en:** Todos los proyectos con autenticación custom (no Supabase Auth)
+- **Proyecto:** Asiste Hogar
+
+#### 2026-02-20: Integrar Snyk para auditoría de dependencias
+- **Error:** No detectar vulnerabilidades en `node_modules` hasta producción
+- **Síntoma:** Dependencias con CVEs conocidos pasan al deploy
+- **Fix:** Integrar Snyk: `npx snyk auth` → `npx snyk test` → `npx snyk monitor`
+- **Aplicar en:** Todos los proyectos Node.js / Python
+- **Documentación:** `skills/snyk-security-audit/SKILL.md`
+- **Proyecto:** Todos (mejora preventiva)
+
+---
+
+### Desarrollo / DevX
+
+#### 2026-02-09: Siempre `npm run dev`, nunca `next dev` directo
+- **Error:** Ejecutar `next dev` directamente con puerto hardcodeado
+- **Síntoma:** Conflictos de puerto si otro proceso ya usa 3000
+- **Fix:** Configurar script en `package.json` con auto-detección de puerto libre (3000-3006)
+- **Aplicar en:** Todos los proyectos Next.js
+- **Proyecto:** Asiste Hogar
+
+#### 2026-02-20: Bulk email — rate limiting 500ms entre envíos
+- **Error:** Enviar emails masivos sin delay causa rate limiting del proveedor
+- **Síntoma:** Resend devuelve 429 Too Many Requests después de ~10 emails rápidos
+- **Fix:** Añadir `await new Promise(r => setTimeout(r, 500))` entre cada envío
+- **Aplicar en:** Todos los proyectos con envío masivo de emails
+- **Proyecto:** Asiste Hogar
+
+---
+
+### Contratos y Documentos
+
+#### 2026-02-20: HTML templates + iframe para preview de contratos en tiempo real
+- **Error:** Generar PDFs directamente sin previsualización
+- **Síntoma:** Errores de formato solo detectados al descargar el PDF
+- **Fix:** Generar HTML con template + placeholders, renderizar en `<iframe>` para preview, y usar `window.print()` para imprimir/descargar como PDF
+- **Aplicar en:** Todos los proyectos con generación de documentos (contratos, facturas, presupuestos)
+- **Proyecto:** Asiste Hogar
+
+---
+
+### Auth y Roles
+
+#### 2026-02-20: Patrón super_admin para gestión de equipo
+- **Error:** Admin único sin delegación ni control de acceso granular
+- **Síntoma:** Un solo admin gestiona todo, sin audit trail ni control de permisos
+- **Fix:** Implementar `super_admin` con CHECK constraint en `profiles.role`. Solo super_admin puede crear/eliminar otros admins. API protegida con verificación de rol
+- **Aplicar en:** Todos los proyectos SaaS con múltiples administradores
+- **Proyecto:** Asiste Hogar
+
+---
+
 ## 🔄 Proceso de Documentación
 
 Cuando encuentres un error:
@@ -95,10 +173,10 @@ Cuando encuentres un error:
 
 ## 📊 Estadísticas
 
-- **Total aprendizajes:** 6
-- **Último actualizado:** 2026-02-10
+- **Total aprendizajes:** 14
+- **Último actualizado:** 2026-02-20
 - **Proyectos contribuyentes:** Asiste Hogar, ROI Master Calculator IA
-- **Skills creadas:** 1 (spanish-naming-convention)
+- **Skills creadas:** 2 (spanish-naming-convention, snyk-security-audit)
 
 ---
 
