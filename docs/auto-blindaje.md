@@ -109,6 +109,38 @@
 - **Documentación:** `skills/snyk-security-audit/SKILL.md`
 - **Proyecto:** Todos (mejora preventiva)
 
+#### 2026-02-25: NUNCA hardcodear secrets en scripts de utilidades
+- **Error:** 20+ scripts con DB passwords, access tokens y service role keys como strings literales
+- **Síntoma:** Snyk detectó exposición de credenciales en historial de git
+- **Fix:** Todos los scripts deben usar `dotenv.config({ path: '.env.local' })` + `process.env.VARIABLE`. Eliminar scripts obsoletos que ya no se usan
+- **Aplicar en:** Cualquier script de utilidad (`scripts/*.mjs`, `scripts/*.js`)
+- **Documentación:** `saas-factory/.claude/prompts/security-checklist.md` v2.0
+- **Proyecto:** Asiste Hogar
+- **⚠️ Clave:** Borrar el archivo de git NO borra el historial. El secreto sigue expuesto en `git log`
+
+#### 2026-02-25: Supabase views exponen datos sensibles sin RLS
+- **Error:** Views como `auth.users` y `pg_stat_statements` son accesibles vía API pública sin protección
+- **Síntoma:** Supabase Security Advisor reporta "Unrevoked permissions for auth.users" y "Unrevoked permissions for pg_stat_statements"
+- **Fix:** Ejecutar migración: `REVOKE ALL ON auth.users FROM anon, authenticated;` + `REVOKE USAGE ON SCHEMA auth FROM anon, authenticated;`
+- **Aplicar en:** Toda migración que cree views, y como migración base en nuevos proyectos
+- **Documentación:** `supabase/migrations/20260225_security_hardening.sql`
+- **Proyecto:** Asiste Hogar
+
+#### 2026-02-25: Rotar credenciales expuestas INMEDIATAMENTE — borrar NO es suficiente
+- **Error:** Secretos expuestos en historial de git siguen siendo válidos incluso tras borrar el archivo
+- **Síntoma:** Access tokens y DB passwords comprometidos pueden usarse para acceder a datos aunque el archivo ya no exista
+- **Fix:** 1) Revocar la credencial antigua en el dashboard, 2) Generar nueva, 3) Actualizar `.env.local`, 4) Habilitar Leaked Password Protection en Supabase
+- **Aplicar en:** Cualquier secreto que aparezca en `git log` o sea detectado por Snyk
+- **Proyecto:** Asiste Hogar
+- **⚠️ Clave:** Protocolo: Revocar → Rotar → Actualizar → Documentar
+
+#### 2026-02-25: Auditoría periódica con múltiples herramientas
+- **Error:** Vulnerabilidades en dependencias (jspdf 4.1.0) no detectadas hasta scan externo
+- **Síntoma:** 3 CVEs High severity pasaron desapercibidos hasta correo de Snyk
+- **Fix:** Ejecutar periódicamente: `npm audit` + Supabase `get_advisors(security)` + Snyk + `git grep` para buscar secrets hardcodeados
+- **Aplicar en:** Todos los proyectos, especialmente tras `npm install` y migraciones
+- **Proyecto:** Asiste Hogar
+
 ---
 
 ### Desarrollo / DevX
@@ -173,8 +205,8 @@ Cuando encuentres un error:
 
 ## 📊 Estadísticas
 
-- **Total aprendizajes:** 14
-- **Último actualizado:** 2026-02-20
+- **Total aprendizajes:** 18
+- **Último actualizado:** 2026-02-26
 - **Proyectos contribuyentes:** Asiste Hogar, ROI Master Calculator IA
 - **Skills creadas:** 2 (spanish-naming-convention, snyk-security-audit)
 
