@@ -118,3 +118,42 @@ Buscar en el repo workflows que contengan:
 | **Integration Sync** | Cron → API → Compare → Update | Sync Stripe → Supabase cada hora |
 | **Automation** | Webhook → Process → Condition → Action | Pago Stripe → Tag AC → Email |
 | **Monitoring** | Schedule → Check → Alert | Health check Railway cada 5min |
+
+## 🔌 Conexión MCP (Agente IA ↔ n8n)
+
+n8n soporta **MCP Server nativo** (v1.123+), permitiendo que agentes IA (Claude, Gemini, Codex) interactúen directamente con los workflows sin browser.
+
+### Configuración
+1. En n8n → **Settings** → **Instance-level MCP** → Activar
+2. Obtener **Server URL** y **Access Token** desde Connection Details
+3. Guardar en `.env.local` del proyecto:
+   ```
+   N8N_MCP_URL=https://tu-instancia.hstgr.cloud/mcp-server/http
+   N8N_MCP_TOKEN=<token-generado>
+   ```
+4. Añadir al `.mcp.json` del proyecto:
+   ```json
+   {
+     "mcpServers": {
+       "n8n": {
+         "type": "http",
+         "url": "${N8N_MCP_URL}",
+         "headers": {
+           "Authorization": "Bearer ${N8N_MCP_TOKEN}"
+         }
+       }
+     }
+   }
+   ```
+
+### Capacidades MCP
+- 🔍 Buscar workflows por nombre/descripción
+- 📋 Obtener metadata y triggers de workflows
+- ▶️ Ejecutar workflows directamente desde el agente
+- ⚡ Mucho más rápido que control vía browser
+
+### Seguridad
+- ⚠️ **NUNCA** commitear el token MCP al repositorio
+- El token va exclusivamente en `.env.local` (que está en `.gitignore`)
+- Si se compromete → rotar inmediatamente desde Settings → MCP Access → Rotate
+
