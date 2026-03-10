@@ -318,8 +318,8 @@ npm run test:e2e     # Tests E2E
 | Tipo de Error | Dónde Documentar |
 |---------------|------------------|
 | Específico de feature | PRP de esa feature |
-| Aplica a múltiples features | `.claude/prompts/*.md` |
-| Crítico para TODO | `GEMINI.md` o `CLAUDE.md` |
+| Aplica a múltiples features | `.agent/skills/*.md` |
+| Crítico para TODO | `.agent/HOJA_FALLOS.md` o `user rules` |
 
 ---
 

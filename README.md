@@ -2,8 +2,8 @@
 
 > Sistema de conocimiento compartido que crece automáticamente con cada proyecto
 
-**Versión:** 1.0.0  
-**Última actualización:** 2026-02-07
+**Versión:** 1.1.0  
+**Última actualización:** 2026-02-20
 
 ---
 
@@ -117,7 +117,7 @@ Error ocurre → Se arregla → Se DOCUMENTA → NUNCA ocurre de nuevo
 ### Crecimiento Orgánico
 
 No es un proyecto que se "termina". Crece naturalmente con cada proyecto:
-- Hoy: 3 aprendizajes, 7 skills
+- Hoy: 14 aprendizajes, 9 skills
 - En 6 meses: 50+ aprendizajes, 20+ skills
 - En 1 año: 100+ aprendizajes, 50+ skills
 
@@ -178,10 +178,10 @@ No es un proyecto que se "termina". Crece naturalmente con cada proyecto:
 ## 📊 Métricas
 
 **Estado actual:**
-- Aprendizajes documentados: 3
-- Skills creadas: 7
+- Aprendizajes documentados: 14
+- Skills creadas: 9
 - Automations: 1
-- Proyectos contribuyentes: 1 (Asiste Hogar)
+- Proyectos contribuyentes: 2 (Asiste Hogar, ROI Master Calculator IA)
 
 **Objetivo 6 meses:**
 - Aprendizajes: 50+
