@@ -141,6 +141,29 @@
 - **Aplicar en:** Todos los proyectos, especialmente tras `npm install` y migraciones
 - **Proyecto:** Asiste Hogar
 
+#### 2026-03-13: ⚠️ CRÍTICO — Stripe en modo TEST en producción tras pruebas E2E
+- **Error:** Cambiar `stripe_mode` a "test" en la DB para pruebas E2E y NO restaurar a "live"
+- **Síntoma:** Clientes reales no pueden pagar — tarjetas rechazadas por Stripe TEST
+- **Fix:** 1) Cambiar `stripe_mode` a "live" en Integration table 2) Cambiar default del código de "test" a "live" 3) VERIFICAR con `GET /api/payments/public-key` que devuelve `pk_live_` y `mode: "live"`
+- **Aplicar en:** Todos los proyectos con Stripe y flujo test/live
+- **Documentación:** `.agent/skills/generation-web-learning/SKILL.md`
+- **Proyecto:** VibeMultiatlas (GENERATION-WEB-guillermo)
+- **⚠️ Clave:** PROTOCOLO POST-E2E: siempre ejecutar checklist: ✅ stripe_mode=live ✅ pk_live_ en public-key ✅ sk_live_ en create-intent
+
+#### 2026-03-13: Nunca tener dos fuentes de verdad para templates de email
+- **Error:** `sendCustomerEmail` leía templates HTML de la Integration table (DB) antes de usar los hardcodeados
+- **Síntoma:** Emails con tema dark mode roto en Outlook porque la DB tenía templates viejos
+- **Fix:** Eliminar lectura de templates de la DB. SIEMPRE usar `DEFAULT_TEMPLATES` en código. Una sola fuente de verdad
+- **Aplicar en:** Cualquier sistema de email con templates configurables
+- **Proyecto:** VibeMultiatlas (GENERATION-WEB-guillermo)
+
+#### 2026-03-13: charset UTF-8 obligatorio en headers de email para idiomas con acentos
+- **Error:** No incluir `charset=UTF-8` en headers de emails enviados via Resend/nodemailer
+- **Síntoma:** Acentos españoles (é,á,ñ) aparecen como □ en Outlook
+- **Fix:** Resend: `headers: { "Content-Type": "text/html; charset=UTF-8" }` / Nodemailer: `encoding: "utf-8"`
+- **Aplicar en:** Todos los proyectos que envíen emails en español u otros idiomas con caracteres especiales
+- **Proyecto:** VibeMultiatlas (GENERATION-WEB-guillermo)
+
 ---
 
 ### Desarrollo / DevX
@@ -205,10 +228,10 @@ Cuando encuentres un error:
 
 ## 📊 Estadísticas
 
-- **Total aprendizajes:** 18
-- **Último actualizado:** 2026-02-26
-- **Proyectos contribuyentes:** Asiste Hogar, ROI Master Calculator IA
-- **Skills creadas:** 2 (spanish-naming-convention, snyk-security-audit)
+- **Total aprendizajes:** 21
+- **Último actualizado:** 2026-03-13
+- **Proyectos contribuyentes:** Asiste Hogar, ROI Master Calculator IA, VibeMultiatlas
+- **Skills creadas:** 3 (spanish-naming-convention, snyk-security-audit, generation-web-learning)
 
 ---
 
